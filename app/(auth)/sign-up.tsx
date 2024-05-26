@@ -1,10 +1,11 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "@/constants";
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { createUser } from "../../lib/appwrite";
 
 const Signup = () => {
   const [form, setForm] = useState({
@@ -15,9 +16,24 @@ const Signup = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!form.username || !form.email || !form.password) {
+      Alert.alert("Error", "please fill all the fields");
+    }
     setLoading(true);
+    try {
+      createUser(form.username, form.email, form.password);
+
+      //set it to global state
+      //router.replace("/");
+
+    } catch (e) {
+      Alert.alert("Error", e?.message);
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <SafeAreaView className="px-4 bg-primary h-full ">
       <ScrollView>
@@ -37,6 +53,7 @@ const Signup = () => {
             onChangeText={(e: any) => setForm({ ...form, username: e })}
             otherStyles="mt-7"
             placeholder="Enter unique username"
+            
           />
 
           <FormField
@@ -60,13 +77,6 @@ const Signup = () => {
             containerStyles="mt-4"
             isLoading={loading}
           />
-             <CustomButton
-            title="Sign up"
-            handlePress={handleSubmit}
-            containerStyles="mt-4"
-            isLoading={loading}
-          />
-
 
           <View className="pt-5 flex-row justify-center w-full gap-2 items-center">
             <Text className="text-base font-pregular text-white">

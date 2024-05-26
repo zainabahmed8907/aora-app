@@ -12,13 +12,16 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true, 
+      "package":"com.zee.aora"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      }, 
+      "package":"com.zee.aora"
+
     },
     "web": {
       "bundler": "metro",
