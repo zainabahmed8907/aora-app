@@ -17,18 +17,19 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    if (!form.username || !form.email || !form.password) {
-      Alert.alert("Error", "please fill all the fields");
+    if (form.username === "" || form.email === "" || form.password === "") {
+      Alert.alert("Error", "Please fill in all fields");
     }
+
     setLoading(true);
     try {
-      createUser(form.username, form.email, form.password);
+      const result = await createUser(form.email, form.password, form.username);
+      // setUser(result);
+      // setIsLogged(true);
 
-      //set it to global state
-      //router.replace("/");
-
-    } catch (e) {
-      Alert.alert("Error", e?.message);
+      router.replace("/home");
+    } catch (error) {
+      Alert.alert("Error", error?.message);
     } finally {
       setLoading(false);
     }
@@ -50,7 +51,10 @@ const Signup = () => {
           <FormField
             title="Username"
             value={form.username}
-            onChangeText={(e: any) => setForm({ ...form, username: e })}
+            onChangeText={(e: any) => {
+              setForm({ ...form, username: e });
+              console.log(form);
+            }}
             otherStyles="mt-7"
             placeholder="Enter unique username"
             

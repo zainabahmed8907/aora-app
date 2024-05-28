@@ -1,11 +1,19 @@
 import CustomButton from "@/components/CustomButton";
 import { images } from "@/constants";
+import { useGlobalContext } from "@/context/GlobalProvider";
 import { Link, Redirect, router } from "expo-router";
 import React from "react";
 import { Image, ScrollView, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
+  const {isLoggedIn, isLoading, } = useGlobalContext();
+
+  if(!isLoading && isLoggedIn){
+    console.log(isLoading, isLoading);
+    return <Redirect href="/home" />
+  }
+  
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
@@ -39,7 +47,9 @@ const Home = () => {
           <View className="mt-7 w-full">
             <CustomButton
               title="Continue with email"
-              handlePress={() => {router.push('/sign-in')}}
+              handlePress={() => {
+                router.push("/sign-in");
+              }}
               textStyles=""
               containerStyles=""
             />

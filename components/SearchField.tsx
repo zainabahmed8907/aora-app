@@ -2,7 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import { icons } from "@/constants";
 
-const FormField = ({
+const SearchField = ({
   title,
   onChangeText,
   otherStyles,
@@ -38,4 +38,4 @@ const FormField = ({
   );
 };
 
-export default FormField;
+export default SearchField;
